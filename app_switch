@@ -1,0 +1,11 @@
+#!/bin/bash
+# Adapted from user55822 on AskUbuntu: http://askubuntu.com/a/195201/72546
+
+SCREEN_W=1920 #$(xwininfo -root | sed -n 's/^  Width: \(.*\)$/\1/p')
+SCREEN_H=1080 #$(xwininfo -root | sed -n 's/^  Height: \(.*\)$/\1/p')
+
+NAME='emacs24.Emacs'
+
+wmctrl -xlG | awk -v W="$SCREEN_W" -v H="$SCREEN_H" -v NAME="$NAME" '$7==NAME && $3>=0 && $3<W && $4>=0 && $4<H {print $1}' | while read WINS; do wmctrl -ia "$WINS"; done
+
+exit 0
